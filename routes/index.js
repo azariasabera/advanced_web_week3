@@ -10,17 +10,17 @@ router.get('/', function(req, res, next) {
 
 router.post("/todo", (req, res) => {
   try {
-      const { name, task } = req.body;
-      let user = todoList.find(user => user.name === name);
 
-      if (user) {
-          user.todos.push(task);
-      } else {
-          todoList.push({ name, todos: [task] });
-      }
-
-      res.json({
-          list: todoList
+    if(todoList.find(todo => todo.name === req.body.name)){
+      todoList.find(todo => todo.name === req.body.name).task.push(req.body.task);
+    }
+    else{  
+      todoList.push({
+        name: req.body.name, 
+        task: [req.body.task]
+      });}
+    res.send({
+        list: todoList
       });
   } catch (error) {
       res.status(400).json({

@@ -5,7 +5,7 @@ let name = document.getElementById("input-name");
 submitButton.addEventListener("click", function(){
     let t = tasks.value;
     let n = name.value;
-    fetch('http://localhost:3000/todo', {
+    fetch("/todo", {
         method: "post",
         headers: {
             'Content-Type': 'application/json'
@@ -20,7 +20,8 @@ submitButton.addEventListener("click", function(){
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data)
-    .catch(err => console.log(err));
+        console.log(data);
     });
 });
+
+
