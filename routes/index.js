@@ -37,10 +37,12 @@ router.get("/todo/:id", (req, res) => {
   let name = req.params.id;
   let user = todoList.find(todo => todo.name === name);
   if(user){
-    res.render('user', {name: user.name, task: user.task})
+    //res.render('user', {name: user.name, task: user.task})
+    res.json(user);
   }
   else{
-    res.status(400).render('error', {error: "User not found"});
+    //res.status(400).render('error', {error: "User not found"});
+    res.status(404).json({msg: "User not found"});
   }
 });
 

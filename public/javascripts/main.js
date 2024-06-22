@@ -36,12 +36,26 @@ searchButton.addEventListener("click", function(){
     let n = searchName.value;
     searchResults.style.display = "block";
     fetch("/todo/" + n)
-    .then(response => response.text())
+    /* .then(response => response.text())
     .then(html => {
         searchResults.innerHTML = html;
     })
     .catch(error => {
         console.log(error);
+    }); */
+    .then(response => {
+        if(response.ok){
+            return response.json();
+        }
+        else{
+            throw new Error("User not found");
+        }    
+    })
+    .then(user => {
+        document.getElementById('search-results-message').textContent = `${user.name}: ${user.task.join(', ')}`;
+    })
+    .catch(error => {
+        document.getElementById('search-results-message').textContent = error.message;
     });
 });
 
