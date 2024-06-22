@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-let todoList = [];
+let todoList = [
+  { name: 'Alice', task: ['Buy milk', 'Read book'] },
+  { name: 'Bob', task: ['Write report', 'Meet client'] }
+];
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -13,19 +16,31 @@ router.post("/todo", (req, res) => {
 
     if(todoList.find(todo => todo.name === req.body.name)){
       todoList.find(todo => todo.name === req.body.name).task.push(req.body.task);
+      res.send("Todo added");
     }
+
     else{  
       todoList.push({
         name: req.body.name, 
         task: [req.body.task]
-      });}
-    res.send({
-        list: todoList
       });
+      res.send("User added");
+    }
   } catch (error) {
       res.status(400).json({
           msg: "Invalid request"
       });
+  }
+});
+
+router.get("/todo/:id", (req, res) => {
+  let name = req.params.id;
+  let user = todoList.find(todo => todo.name === name);
+  if(user){
+    res.render('user', {name: user.name, task: user.task})
+  }
+  else{
+    res.status(400).render('error', {error: "User not found"});
   }
 });
 

@@ -1,0 +1,12 @@
+div(id="search-results")
+    h1 Search Results
+    br
+    br
+    if task && task.length > 0
+      p Name: #{name}
+      p Todos:
+      each todo in task
+        p= todo
+    else
+      p Name: #{name}
+      p No todos found
