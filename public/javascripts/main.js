@@ -35,7 +35,7 @@ submitButton.addEventListener("click", function(){
 searchButton.addEventListener("click", function(){
     let n = searchName.value;
     searchResults.style.display = "block";
-    fetch("/todo/" + n)
+    fetch("/user/" + n)
     /* .then(response => response.text())
     .then(html => {
         searchResults.innerHTML = html;

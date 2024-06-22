@@ -33,7 +33,7 @@ router.post("/todo", (req, res) => {
   }
 });
 
-router.get("/todo/:id", (req, res) => {
+router.get("/user/:id", (req, res) => {
   let name = req.params.id;
   let user = todoList.find(todo => todo.name === name);
   if(user){
