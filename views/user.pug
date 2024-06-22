@@ -3,10 +3,10 @@ div(id="search-results")
     br
     br
     if task && task.length > 0
-      p Name: #{name}
-      p Todos:
-      each todo in task
-        p= todo
+        p Name: #{name}
+        p Todos:
+        each todo in task
+            p= todo
     else
-      p Name: #{name}
-      p No todos found
+        p Name: #{name}
+        p No todos found

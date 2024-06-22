@@ -4,6 +4,7 @@ let name = document.getElementById("input-name");
 let searchName = document.getElementById("search-name");
 let searchButton = document.getElementById("search");
 let searchResults = document.getElementById("search-results");
+searchResults.style.display = "none";
 
 submitButton.addEventListener("click", function(){
     let t = tasks.value;
@@ -27,16 +28,17 @@ submitButton.addEventListener("click", function(){
     // ie it was .then(response => response.json()) and it was raising an error.
     .then(data => {
         console.log(data);
+        document.getElementById("response-message").innerText = data;
     });
 });
 
 searchButton.addEventListener("click", function(){
     let n = searchName.value;
+    searchResults.style.display = "block";
     fetch("/todo/" + n)
     .then(response => response.text())
     .then(html => {
         searchResults.innerHTML = html;
-        searchResults.style.display = "block";
     })
     .catch(error => {
         console.log(error);
