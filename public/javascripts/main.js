@@ -5,6 +5,7 @@ let searchName = document.getElementById("search-name");
 let searchButton = document.getElementById("search");
 let searchResults = document.getElementById("search-results");
 searchResults.style.display = "none";
+let deleteUserButton = document.getElementById("delete-user");
 
 submitButton.addEventListener("click", function(){
     let t = tasks.value;
@@ -59,3 +60,25 @@ searchButton.addEventListener("click", function(){
     });
 });
 
+
+deleteUserButton.addEventListener("click", function(){
+    console.log("Delete user button clicked");
+    let n = searchName.value;
+    fetch("/user/" + n, {
+        method: "delete"
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json();
+        }
+        else{
+            throw new Error("User not found");
+        }
+    })
+    .then(data => {
+        document.getElementById('delete-user-message').textContent = data.msg;
+    })
+    .catch(error => {
+        document.getElementById('delete-user-message').textContent = error.message;
+    });
+});

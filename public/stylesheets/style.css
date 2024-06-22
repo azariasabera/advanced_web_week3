@@ -35,3 +35,8 @@ a {
 #search-results {
   background-color: #22f2f2;
 }
+
+#delete-user {
+  background-color: red;
+  color: white;
+}

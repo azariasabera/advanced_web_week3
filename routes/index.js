@@ -44,7 +44,7 @@ router.get("/user/:id", (req, res) => {
     //res.status(400).render('error', {error: "User not found"});
     res.status(404).json({msg: "User not found"});
   }
-});
+})
 
 module.exports = router;
 
@@ -52,3 +52,16 @@ module.exports = router;
 // res.send is used to send a response of any type, 
 // while res.render is used to render a view template. 
 // render can mean to 'display or provide' a view template
+
+
+router.delete("/user/:id", (req, res) => {
+  let name = req.params.id;
+  let user = todoList.find(todo => todo.name === name);
+  if(user){
+    todoList = todoList.filter(todo => todo.name !== name);
+    res.json({msg: "User deleted"});
+  }
+  else{
+    res.status(404).json({msg: "User not found"});
+  }
+});
