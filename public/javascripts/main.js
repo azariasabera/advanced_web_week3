@@ -37,13 +37,6 @@ searchButton.addEventListener("click", function(){
     let n = searchName.value;
     searchResults.style.display = "block";
     fetch("/user/" + n)
-    /* .then(response => response.text())
-    .then(html => {
-        searchResults.innerHTML = html;
-    })
-    .catch(error => {
-        console.log(error);
-    }); */
     .then(response => {
         if(response.ok){
             return response.json();
@@ -53,17 +46,16 @@ searchButton.addEventListener("click", function(){
         }    
     })
     .then(user => {
-        //document.getElementById('search-results-message').textContent = `${user.name}: ${user.task.join(', ')}`;
+        document.getElementById('search-results-message').textContent = `${user.name}: ${user.task.join(', ')}`;
         const resultDiv = document.getElementById('search-result');
         //resultDiv.innerHTML = `${user.name}:`;
+        const parag = document.createElement('p');
+        parag.textContent = "Want to delete task?";
+        resultDiv.appendChild(parag);
 
         user.task.forEach(todo => {
-            const todoElement = document.createElement('div');
-            todoElement.textContent = todo;
-            todoElement.classList.add('todo-item');
-
             const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
+            deleteButton.textContent = `${todo}`;
             deleteButton.classList.add('delete-task');
             deleteButton.addEventListener('click', () => {
                 fetch('/user', {
@@ -77,13 +69,14 @@ searchButton.addEventListener("click", function(){
                 .then(message => {
                     document.getElementById('response-message').textContent = message;
                     if (message === 'Task deleted') {
-                        todoElement.remove();
+                        deleteButton.remove();
+                        // clear resultDiv
+                        resultDiv.innerHTML = '';
                     }
                 });
             });
-
-            todoElement.appendChild(deleteButton);
-            resultDiv.appendChild(todoElement);
+            
+            resultDiv.appendChild(deleteButton);
         });
     })
     .catch(error => {
