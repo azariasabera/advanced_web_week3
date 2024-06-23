@@ -40,3 +40,9 @@ a {
   background-color: red;
   color: white;
 }
+
+.delete-task {
+  background-color: rgb(190, 95, 95);
+  color: white;
+  margin: 5px;
+}

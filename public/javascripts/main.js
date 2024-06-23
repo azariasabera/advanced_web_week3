@@ -53,7 +53,38 @@ searchButton.addEventListener("click", function(){
         }    
     })
     .then(user => {
-        document.getElementById('search-results-message').textContent = `${user.name}: ${user.task.join(', ')}`;
+        //document.getElementById('search-results-message').textContent = `${user.name}: ${user.task.join(', ')}`;
+        const resultDiv = document.getElementById('search-result');
+        //resultDiv.innerHTML = `${user.name}:`;
+
+        user.task.forEach(todo => {
+            const todoElement = document.createElement('div');
+            todoElement.textContent = todo;
+            todoElement.classList.add('todo-item');
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('delete-task');
+            deleteButton.addEventListener('click', () => {
+                fetch('/user', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name : n, task: todo})
+                })
+                .then(response => response.text())
+                .then(message => {
+                    document.getElementById('response-message').textContent = message;
+                    if (message === 'Task deleted') {
+                        todoElement.remove();
+                    }
+                });
+            });
+
+            todoElement.appendChild(deleteButton);
+            resultDiv.appendChild(todoElement);
+        });
     })
     .catch(error => {
         document.getElementById('search-results-message').textContent = error.message;
@@ -62,7 +93,7 @@ searchButton.addEventListener("click", function(){
 
 
 deleteUserButton.addEventListener("click", function(){
-    console.log("Delete user button clicked");
+    //console.log("Delete user button clicked");
     let n = searchName.value;
     fetch("/user/" + n, {
         method: "delete"
@@ -82,3 +113,5 @@ deleteUserButton.addEventListener("click", function(){
         document.getElementById('delete-user-message').textContent = error.message;
     });
 });
+
+

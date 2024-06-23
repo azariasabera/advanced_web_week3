@@ -65,3 +65,20 @@ router.delete("/user/:id", (req, res) => {
     res.status(404).json({msg: "User not found"});
   }
 });
+
+router.put('/user', (req, res) => {
+  /* const { name, task } = req.body;
+  const user = users.find(user => user.name === name);
+
+  if (user) {
+      user.task = user.task.filter(todo => todo !== task);
+      res.send('Task deleted');
+  } else {
+      res.status(404).send('User not found');
+  } */
+  const { name, task } = req.body;
+  const user = todoList.find(user => user.name === name);
+  user.task = user.task.filter(todo => todo !== task);
+  res.send('Task deleted');
+
+});
